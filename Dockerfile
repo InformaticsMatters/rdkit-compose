@@ -1,4 +1,4 @@
-FROM informaticsmatters/rdkit:latest
+FROM informaticsmatters/rdkit:Release_2015_03_1
 MAINTAINER Anthony Bradley
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
