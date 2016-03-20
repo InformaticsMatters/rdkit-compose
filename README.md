@@ -9,7 +9,7 @@ Second build the images
 ```#bash
 git clone git@github.com:abradle/rdkit-compose.git
 cd rdkit-compose
-mv secrets.env.sample secrets.env.
+mv secrets.env.sample secrets.env
 docker-compose build
 ```
 
