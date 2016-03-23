@@ -1,6 +1,8 @@
 ###Django rdkit server using compose
 
-First install docker and docker-compose (pip install docker-compose)
+Assumes you have installed Docker...
+
+First install docker-compose 
 
 ```pip install docker-compose```
 
