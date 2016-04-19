@@ -1,0 +1,12 @@
+app:
+  build: .
+  restart: always
+  env_file: secrets.env
+  environment:
+    - C_FORCE_ROOT=true
+  command: gunicorn -w 3 -b 0.0.0.0 proj.wsgi
+  volumes:
+    - /code/static
+  ports:
+    - "8000:8000"
+
