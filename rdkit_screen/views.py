@@ -20,13 +20,14 @@ def index(request):
     "name":"RDKit screening",
     "description":"RDKit simple descriptor based screening",
     "tags":["virtualscreening", "screening", "moleculardescriptors", "fingerprints", "rdkit"],
+    "icon": "icons/filter_molecules.png",
     "paths":["/Chemistry/Toolkits/RDKit/Screening","/Chemistry/Screening"],
     "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
     "layers":["public"],
     "inputClass":"com.im.lac.types.MoleculeObject",
     "outputClass":"com.im.lac.types.MoleculeObject",
-    "inputType":"ARRAY",
-    "outputType":"ARRAY",
+    "inputType":"STREAM",
+    "outputType":"STREAM",
     "accessModes":[
     {
         "id":"asyncHttp",
@@ -37,30 +38,58 @@ def index(request):
         "jobType":"com.im.lac.job.jobdef.AsyncHttpProcessDatasetJobDefinition",
         "parameters":[
             {
-            "type":"STRUCTURE",
-            "key":"smiles",
-            "label":"Query",
-            "description":"Query structure (as smiles)"
+            "editable": True,
+            "visible": True,
+            "description": "Structure to use for the query",
+            "label": "Query Structure",
+            "key": "query.smiles",
+            "typeDescriptor": {
+              "type": "org.squonk.options.types.Structure",
+              "molType": "DISCRETE",
+              "@class": "org.squonk.options.MoleculeTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
             },
             {
-            "type":"FLOAT",
-            "key":"threshold",
-            "label":"Similarity Cuttoff",
-            "description":"Similarity score cuttoff between 0 and 1 (1 means identical)"
+            "editable": True,
+            "visible": True,
+            "defaultValue": 0.7,
+            "description": "Similarity score cuttoff between 0 and 1 (1 means identical)",
+            "label": "Similarity Cuttoff",
+            "key": "query.threshold",
+            "typeDescriptor": {
+              "type": "java.lang.Float",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
             },
             {
-            "type":"STRING",
-            "key":"fp_method",
-            "label":"Fingerprint",
+            "editable": True,
+            "visible": True,
+            "defaultValue": "morgan",
             "values": ["morgan","maccs","rdkit_topo","atom_pairs"],
-            "description":"Fingerprint method"
+            "description": "Fingerprint method",
+            "label": "Fingerprint",
+            "key": "query.fp_method",
+            "typeDescriptor": {
+              "type": "java.lang.String",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
             },
             {
-            "type":"STRING",
-            "key":"metric",
-            "label":"Metric",
+            "editable": True,
+            "visible": True,
+            "defaultValue": "morgan",
             "values": ["tanimoto","cosine","dice","tversky"],
-            "description":"Similarity comparison metric"
+            "description": "Similarity comparison metric",
+            "label": "Metric",
+            "key": "query.metric",
+            "typeDescriptor": {
+              "type": "java.lang.String",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
             }
         ],
         "adapterClassName":"com.im.lac.services.job.service.adapters.HttpGenericParamsJobAdapter"
