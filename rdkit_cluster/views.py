@@ -68,13 +68,26 @@ def index(request):
             "@class": "org.squonk.options.OptionDescriptor"
             },
             {
-            "editable": "true",
-            "visible": "true",
+            "editable": True,
+            "visible": True,
             "defaultValue": "morgan",
             "values": ["tanimoto","cosine","dice","tversky"],
             "description": "Similarity comparison metric",
             "label": "Metric",
             "key": "query.metric",
+            "typeDescriptor": {
+              "type": "java.lang.String",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
+            },
+            {
+            "editable": False,
+            "visible": True,
+            "defaultValue": "application/json",
+            "description": "Content-Type header",
+            "label": "Content-Type",
+            "key": "header.Content-Type",
             "typeDescriptor": {
               "type": "java.lang.String",
               "@class": "org.squonk.options.SimpleTypeDescriptor"

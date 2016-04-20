@@ -45,6 +45,7 @@ def index(request):
             "key": "query.smiles",
             "typeDescriptor": {
               "type": "org.squonk.options.types.Structure",
+              "formats": ["smiles"],        
               "molType": "DISCRETE",
               "@class": "org.squonk.options.MoleculeTypeDescriptor"
             },
@@ -87,6 +88,32 @@ def index(request):
             "key": "query.metric",
             "typeDescriptor": {
               "type": "java.lang.String",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
+            },
+            {
+            "editable": False,
+            "visible": True,
+            "defaultValue": "application/json",
+            "description": "Content-Type header",
+            "label": "Content-Type",
+            "key": "header.Content-Type",
+            "typeDescriptor": {
+              "type": "java.lang.String",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
+            },
+            {
+            "editable": False,
+            "visible": True,
+            "defaultValue": True,
+            "description": "Not all inputs are returned",
+            "label": "Filter results",
+            "key": "option.filter",
+            "typeDescriptor": {
+              "type": "java.lang.Boolean",
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
