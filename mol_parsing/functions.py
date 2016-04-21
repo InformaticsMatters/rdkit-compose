@@ -35,8 +35,8 @@ def do_screen(simm, screen_fps, threshold, mol_fps):
 
 
 def do_clustering(simm, queue_fps, threshold):
-    """Function to peform the clustering fro m alibrary"""
-    # Now prodcue the distance matric
+    """Function to peform the clustering for a library"""
+    # Now produce the distance matric
     dists = []
     screen_fps = []
     while True:
@@ -57,13 +57,13 @@ def do_clustering(simm, queue_fps, threshold):
     cs = Butina.ClusterData(dists, nfps, threshold, isDistData=True)
     # Out mols is the list for caputring the clusters
     out_mols = []
-    # Now loop trhough the clusters outputing the results
+    # Now loop through the clusters outputing the results
     for i, c in enumerate(cs):
         for mol_ind in c:
             my_mol = screen_fps[mol_ind]
             my_mol["values"]["cluster"] = i
             out_mols.append(my_mol)
-    # Now retrun the response
+    # Now return the response
     return HttpResponse(json.dumps(remove_keys(out_mols)))
 
 
