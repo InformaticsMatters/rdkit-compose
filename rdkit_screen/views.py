@@ -81,7 +81,7 @@ def index(request):
             {
             "editable": True,
             "visible": True,
-            "defaultValue": "morgan",
+            "defaultValue": "tanimoto",
             "values": ["tanimoto","cosine","dice","tversky"],
             "description": "Similarity comparison metric",
             "label": "Metric",
