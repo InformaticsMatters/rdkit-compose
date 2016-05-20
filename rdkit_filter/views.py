@@ -1,30 +1,26 @@
-# Create your views here.
 from django.shortcuts import render
+import urllib
 from django.http import HttpResponse
-from rdkit_screen.functions import SimMethods, LibMethods, FPMethods
-from rdkit_cluster.functions import ClusterMethods
 from rdkit import Chem
-import json, gzip
-from rdkit.ML.Cluster import Butina
-from StringIO import StringIO
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
 from json_function.json_parse import remove_keys
 import ast
 import urllib2
-import urllib
-from mol_parsing.functions import request_handler, process_input
-import json
+from mol_parsing.functions import process_input
+from rdkit_screen.functions import LibMethods
+from rdkit_filter.functions import *
+import CloseableQueue
 
 def index(request):
     out_d = [
     {
-    "id":"rdkit.clustering.simple",
-    "name":"RDKit clustering",
-    "description":"RDKit simple descriptor based clustering",
-    "tags":["clustering","rdkit"],
-    "icon": "icons/clustering.png",
-    "paths":["/Chemistry/Toolkits/RDKit/Clustering","/Chemistry/Clustering"],
+    "id":"rdkit.filter.pains",
+    "name":"PAINS filter (RDKit)",
+    "description":"RDKit implementation of PAINS filter",
+    "tags":["pains","filter","rdkit"],
+    "icon": "icons/filter_molecules.png",
+    "paths":["/Chemistry/Toolkits/RDKit/Filter","/Chemistry/Filter"],
     "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
     "layers":["public"],
     "inputClass":"com.im.lac.types.MoleculeObject",
@@ -36,47 +32,18 @@ def index(request):
         "id":"asyncHttp",
         "name":"Immediate execution",
         "description":"Execute as an asynchronous REST web service",
-        "executionEndpoint":"cluster_simple",
+        "executionEndpoint":"pains",
         "endpointRelative":True,
-        "jobType":"com.im.lac.job.jobdef.AsyncHttpProcessDatasetJobDefinition",
         "parameters":[
             {
             "editable": True,
             "visible": True,
-            "defaultValue": 0.7,
-            "description": "Similarity score cuttoff between 0 and 1 (1 means identical)",
-            "label": "Similarity Cuttoff",
-            "key": "query.threshold",
+            "description": "Act as a filter (or add match data to all records)",
+            "defaultValue": True,
+            "label": "Act as filter (or add match data)",
+            "key": "query.filter",
             "typeDescriptor": {
-              "type": "java.lang.Float",
-              "@class": "org.squonk.options.SimpleTypeDescriptor"
-            },
-            "@class": "org.squonk.options.OptionDescriptor"
-            },
-            {
-            "editable": True,
-            "visible": True,
-            "defaultValue": "morgan",
-            "values": ["morgan","maccs","rdkit_topo","atom_pairs"],
-            "description": "Fingerprint method",
-            "label": "Fingerprint",
-            "key": "query.fp_method",
-            "typeDescriptor": {
-              "type": "java.lang.String",
-              "@class": "org.squonk.options.SimpleTypeDescriptor"
-            },
-            "@class": "org.squonk.options.OptionDescriptor"
-            },
-            {
-            "editable": True,
-            "visible": True,
-            "defaultValue": "tanimoto",
-            "values": ["tanimoto","cosine","dice","tversky"],
-            "description": "Similarity comparison metric",
-            "label": "Metric",
-            "key": "query.metric",
-            "typeDescriptor": {
-              "type": "java.lang.String",
+              "type": "java.lang.Boolean",
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
@@ -128,13 +95,17 @@ def index(request):
     ]
     return HttpResponse(json.dumps(out_d))
 
-@gzip_page
+
 @csrf_exempt
-def cluster_simple(request):
-        # Read the mols
-    # Take the smiles in the request object
-    if "dump_out" in request.GET:
-        return HttpResponse(json.dumps(str(request))+"\nBODY:" + request.body)
-    mol_type, screen_lib, fp_method, sim_method, threshold, params = request_handler(request)
-    # Now return the process
-    return process_input(fp_method, sim_method, screen_lib, mol_type, threshold, params)
+def pains(request):
+    """View to apply PAINS filters to a library of input molecules"""
+    screen_lib, mol_type, filter = request_params(request)
+    #print "Params:", mol_type, filter
+    # Now handle the POST content 
+    libm = LibMethods(screen_lib, mol_type)
+    my_mols = CloseableQueue.CloseableQueue()
+    libm.get_mols(my_mols)
+    results = process_pains(my_mols, filter)
+   
+    return generate_output(results)
+

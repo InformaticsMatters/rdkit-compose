@@ -8,7 +8,8 @@ from rdkit.Chem.AtomPairs import Pairs
 try:
     from usrcat.toolkits.rd import generate_moments
 except:
-    print "USRCAT NOT INSTALLED"
+	usrcat=False
+    #print "USRCAT NOT INSTALLED"
 from rdkit.Chem import AllChem
 import math, numpy
 import CloseableQueue

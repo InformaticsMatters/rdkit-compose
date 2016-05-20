@@ -109,23 +109,26 @@ def process_input(fp_method, sim_method, screen_lib, screen_type, threshold, par
 
 def find_lib_type(request):
     """Function to handle different types of incoming molecule libraries"""
+    body = request.read()
+    print "Body length:", len(body)
     if "HTTP_CONTENT_ENCODING" in request.META:
         if request.META["HTTP_CONTENT_ENCODING"] == "gzip":
-            in_data = urllib.unquote(request.body)
-            compressedFile = StringIO(in_data)
+            compressedFile = StringIO(body)
             decompressedFile = gzip.GzipFile(fileobj=compressedFile)
             data = decompressedFile.read()
         else:
             print "NOT VALID INPUT ENCODING"
             return None, "DISALLOWED ENCODING TYPE"
     else:
-        data = urllib.unquote(request.body).decode('utf8')
+        #data = urllib.unquote(request.body).decode('utf8')
+        data = body #.decode('utf8')
+    #print "data:", data
     if request.META["CONTENT_TYPE"] == "application/json":
         try:
             screen_lib = ast.literal_eval(data)
             mol_type = "JSON"
         except:
-            print "NOT VALID JSON"
+            print "NOT VALID JSON:"
             return None, "NOT VALID JSON"
     elif request.META["CONTENT_TYPE"] == "chemical/x-mdl-sdfile":
         screen_lib = data

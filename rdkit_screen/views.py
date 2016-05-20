@@ -94,7 +94,7 @@ def index(request):
             },
             {
             "editable": False,
-            "visible": True,
+            "visible": False,
             "defaultValue": "application/json",
             "description": "Content-Type header",
             "label": "Content-Type",
@@ -107,6 +107,19 @@ def index(request):
             },
             {
             "editable": False,
+            "visible": False,
+            "defaultValue": "application/json",
+            "description": "Accept header",
+            "label": "Accept",
+            "key": "header.Accept",
+            "typeDescriptor": {
+              "type": "java.lang.String",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
+            },
+            {
+            "editable": True,
             "visible": True,
             "defaultValue": True,
             "description": "Not all inputs are returned",
@@ -117,9 +130,22 @@ def index(request):
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
+            },
+            {
+            "editable": False,
+            "visible": False,
+            "defaultValue": False,
+            "description": "Streaming supported (not in this case)",
+            "label": "Streaming supported",
+            "key": "streamsupport",
+            "typeDescriptor": {
+              "type": "java.lang.Boolean",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
             }
         ],
-        "adapterClassName":"com.im.lac.services.job.service.adapters.HttpGenericParamsJobAdapter"
+        "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
     }
     ]
     }]

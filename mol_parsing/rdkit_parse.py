@@ -36,5 +36,7 @@ def parse_mol_json(molobj):
     # Get the format and use this as a starting poitn to work out 
     molformat = molobj["format"]
     # Now parse it with RDKit
-    return parse_mol_simple(molformat, molstr)
+    mol = parse_mol_simple(molformat, molstr)
+    mol.SetProp("uuid", molobj["uuid"])
+    return mol
 

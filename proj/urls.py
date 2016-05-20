@@ -9,5 +9,5 @@ urlpatterns = patterns('',
     url(r'^rdkit_screen/', include('rdkit_screen.urls',namespace="rdkit_screen")),
     url(r'^docking_runs/', include('docking_runs.urls',namespace="docking_runs")),
     url(r'^conf_gen/', include('conf_gen.urls',namespace="conf_gen")),
-
+    url(r'^rdkit_filter/', include('rdkit_filter.urls',namespace="rdkit_filter")),
 )

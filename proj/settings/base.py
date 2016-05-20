@@ -54,6 +54,8 @@ INSTALLED_APPS = (
     'rdkit_cluster',
     'rdkit_screen',
     'docking_runs',
+    'conformers',
+    'rdkit_filter'
 )
 
 # Place bcrypt first in the list, so it will be the default password hashing
