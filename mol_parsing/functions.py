@@ -109,6 +109,9 @@ def process_input(fp_method, sim_method, screen_lib, screen_type, threshold, par
 
 def find_lib_type(request):
     """Function to handle different types of incoming molecule libraries"""
+    #for key in request.META:
+    #	if key.startswith("HTTP") or key == "CONTENT_TYPE" or key == "CONTENT_LENGTH":
+    #		print "Meta:",key," -> ",request.META[key]
     body = request.read()
     print "Body length:", len(body)
     if "HTTP_CONTENT_ENCODING" in request.META:

@@ -67,10 +67,13 @@ def process_pains(mols_q, filter):
 						desc = molfilter.GetDescription()
 						#print "  ", desc
 						matched_filters.append(desc)
-					matches_str = "\n".join(matched_filters)
+					#matches_str = ",".join(matched_filters)
 					values = {}
-					values["PainsMatches_RDKit"] = matches_str
-					values["PainsCount_RDKit"] = len(matched_filters)
+					size = len(matched_filters)
+					values["PainsCount_RDKit"] = size
+					if size > 0:
+						values["PainsMatches_RDKit"] = matched_filters
+						#values["PainsMatchesStr_RDKit"] = matches_str
 					mol_result["values"] = values
 					results.put(mol_result)
 			else:

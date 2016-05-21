@@ -73,19 +73,6 @@ def index(request):
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
-            },
-            {
-            "editable": False,
-            "visible": False,
-            "defaultValue": False,
-            "description": "Streaming supported (not in this case)",
-            "label": "Streaming supported",
-            "key": "streamsupport",
-            "typeDescriptor": {
-              "type": "java.lang.Boolean",
-              "@class": "org.squonk.options.SimpleTypeDescriptor"
-            },
-            "@class": "org.squonk.options.OptionDescriptor"
             }
         ],
         "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"

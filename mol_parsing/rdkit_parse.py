@@ -33,7 +33,7 @@ def parse_mol_simple(my_type, txt):
 def parse_mol_json(molobj):
     """Function to get the RDKit mol for a java mol obj"""
     molstr = molobj["source"]
-    # Get the format and use this as a starting poitn to work out 
+    # Get the format and use this as a starting point to work out 
     molformat = molobj["format"]
     # Now parse it with RDKit
     mol = parse_mol_simple(molformat, molstr)
