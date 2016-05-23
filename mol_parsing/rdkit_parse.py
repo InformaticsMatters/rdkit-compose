@@ -2,6 +2,7 @@
 import sys
 from rdkit import Chem
 from sanifix import fix_mol
+from ijson import items
 
 
 def parse_mol_simple(my_type, txt):
@@ -31,12 +32,23 @@ def parse_mol_simple(my_type, txt):
 
 
 def parse_mol_json(molobj):
-    """Function to get the RDKit mol for a java mol obj"""
-    molstr = molobj["source"]
+    """Function to get the RDKit mol from MoleculeObject JSON"""
+    #print "reading mol",molobj["uuid"],molobj["format"]
+    molstr = str(molobj["source"])
     # Get the format and use this as a starting point to work out 
     molformat = molobj["format"]
     # Now parse it with RDKit
     mol = parse_mol_simple(molformat, molstr)
-    mol.SetProp("uuid", molobj["uuid"])
+    mol.SetProp("uuid", str(molobj["uuid"]))
     return mol
+   
+
+def generate_mols_from_json(json):
+	j=0
+	for item in items(json, "item"):
+		j+=1
+		#print "  reading",j
+		mol = parse_mol_json(item)
+		yield mol
+
 

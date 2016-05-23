@@ -24,7 +24,7 @@ def index(request):
     "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
     "layers":["public"],
     "inputClass":"com.im.lac.types.MoleculeObject",
-    "outputClass":"com.im.lac.types.MoleculeObject",
+    "outputClass":"com.im.lac.types.BasicObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
     "accessModes":[
@@ -38,12 +38,13 @@ def index(request):
             {
             "editable": True,
             "visible": True,
-            "description": "Act as a filter (or add match data to all records)",
-            "defaultValue": True,
-            "label": "Act as filter (or add match data)",
+            "description": "How to filter results",
+            "defaultValue": "INCLUDE_ALL",
+            "label": "Filter mode",
+            "values": ["INCLUDE_ALL", "INCLUDE_MATCHING", "INCLUDE_NON_MATCHING"],
             "key": "query.filter",
             "typeDescriptor": {
-              "type": "java.lang.Boolean",
+              "type": "java.lang.String",
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
@@ -87,12 +88,9 @@ def index(request):
 def pains(request):
     """View to apply PAINS filters to a library of input molecules"""
     screen_lib, mol_type, filter = request_params(request)
-    #print "Params:", mol_type, filter
+    print "Params:", mol_type, filter
     # Now handle the POST content 
-    libm = LibMethods(screen_lib, mol_type)
-    my_mols = CloseableQueue.CloseableQueue()
-    libm.get_mols(my_mols)
-    results = process_pains(my_mols, filter)
-   
-    return generate_output(results)
+    return process_request_pains(screen_lib, mol_type, filter)
+    
+    
 

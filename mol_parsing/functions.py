@@ -169,3 +169,52 @@ def request_handler(request):
     else:
         threshold = 0.7
     return mol_type, screen_lib, fp_method, sim_method, threshold, params 
+    
+  
+#def to_bool(value):
+#	if value:
+#		if str(value).lower() in ("yes", "y", "true",  "t", "1"): 
+#			return True
+#	return False
+    
+def read_input(request):
+    if "HTTP_CONTENT_ENCODING" in request.META:
+        if request.META["HTTP_CONTENT_ENCODING"] == "gzip":
+			data = gzip.GzipFile(fileobj=StringIO(request.read()))
+        else:
+            print "NOT VALID INPUT ENCODING"
+            return None, "DISALLOWED ENCODING TYPE"
+    else:
+        data = request
+    return data, "JSON"
+    
+def write_json_results(items):
+	yield "[\n"
+	count = 0
+	for item in items:
+		#print "writing..."
+		if count == 0:
+			yield json.dumps(item)
+		else: 	
+			yield ",\n" + json.dumps(item)
+		count +=1
+	yield "\n]"
+	
+#class IterEncoder(json.JSONEncoder):
+#	"""Allows iterator to be encoded as json.
+#	Taken from http://code.davidjanes.com/blog/2008/12/08/json-encode-iterators/
+#	"""
+#	def default(self, o):
+#		try:
+#			return  json.JSONEncoder.default(self, o)
+#		except TypeError, x:
+#			try:
+#				return  list(o)
+#			except:
+#				return  x
+
+#def generate_output(results):
+#	iter = CloseableQueue.dequeue(results)
+#	return HttpResponse(json.dumps(iter, cls = IterEncoder), content_type='application/json')
+
+
