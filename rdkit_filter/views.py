@@ -5,7 +5,7 @@ from rdkit import Chem
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.gzip import gzip_page
 from json_function.json_parse import remove_keys
-import ast
+import ast, json
 import urllib2
 from mol_parsing.functions import process_input
 from rdkit_screen.functions import LibMethods
@@ -27,8 +27,9 @@ def index(request):
     "outputClass":"com.im.lac.types.BasicObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
-    "accessModes":[
-    {
+    "accessModes":
+        [
+    	{
         "id":"asyncHttp",
         "name":"Immediate execution",
         "description":"Execute as an asynchronous REST web service",
@@ -52,32 +53,19 @@ def index(request):
             {
             "editable": False,
             "visible": False,
-            "defaultValue": "application/json",
-            "description": "Content-Type header",
-            "label": "Content-Type",
-            "key": "header.Content-Type",
+            "defaultValue": True,
+            "description": "Is filter",
+            "label": "Is filter",
+            "key": "option.filter",
             "typeDescriptor": {
-              "type": "java.lang.String",
-              "@class": "org.squonk.options.SimpleTypeDescriptor"
-            },
-            "@class": "org.squonk.options.OptionDescriptor"
-            },
-            {
-            "editable": False,
-            "visible": False,
-            "defaultValue": "application/json",
-            "description": "Accept header",
-            "label": "Accept",
-            "key": "header.Accept",
-            "typeDescriptor": {
-              "type": "java.lang.String",
+              "type": "java.lang.Boolean",
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
             }
         ],
         "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
-    }
+    	}
     ]
     }
     ]

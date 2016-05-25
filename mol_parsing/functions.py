@@ -189,6 +189,7 @@ def read_input(request):
     return data, "JSON"
     
 def write_json_results(items):
+	print "Writing results"
 	yield "[\n"
 	count = 0
 	for item in items:
@@ -199,6 +200,7 @@ def write_json_results(items):
 			yield ",\n" + json.dumps(item)
 		count +=1
 	yield "\n]"
+	print "Results complete"
 	
 #class IterEncoder(json.JSONEncoder):
 #	"""Allows iterator to be encoded as json.

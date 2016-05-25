@@ -50,11 +50,11 @@ INSTALLED_APPS = (
     #'compressor',
 
     # Local apps, referenced via appname
-    'conf_gen',
-    'rdkit_cluster',
-    'rdkit_screen',
-    'docking_runs',
-    'conformers',
+    #'conf_gen',
+    #'rdkit_cluster',
+    #'rdkit_screen',
+    #'docking_runs',
+    'rdkit_conf',
     'rdkit_filter'
 )
 

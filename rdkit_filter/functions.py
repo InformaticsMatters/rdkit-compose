@@ -87,9 +87,7 @@ def process_request_pains(screen_lib, mol_type, filter):
 	#pool.close()
 	#pool.join()
 	
-	#return HttpResponse("OK Dude!\n")
 	iter = CloseableQueue.dequeue(queue)
-	#return HttpResponse(json.dumps(iter, cls = IterEncoder), content_type='application/json')
 	return StreamingHttpResponse(write_json_results(iter))
 
 
