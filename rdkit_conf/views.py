@@ -64,7 +64,7 @@ def index(request):
             "minValues": 0,
             "maxValues": 1,
             "typeDescriptor": {
-              "type": "java.lang.Integer",
+              "type": "java.lang.Float",
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
@@ -72,15 +72,29 @@ def index(request):
             {
             "editable": True,
             "visible": True,
-            "description": "Cluster method (RMSD or TSD)",
+            "description": "Cluster method (RMSD or TFD)",
             "label": "Cluster method",
             "key": "query.method",
-            "values": ["RMSD","TSD"],
+            "values": ["RMSD","TFD"],
             "defaultValue": "RMSD",
             "minValues": 1,
             "maxValues": 1,
             "typeDescriptor": {
               "type": "java.lang.String",
+              "@class": "org.squonk.options.SimpleTypeDescriptor"
+            },
+            "@class": "org.squonk.options.OptionDescriptor"
+            },
+            {
+            "editable": True,
+            "visible": True,
+            "description": "Cluster threshold",
+            "label": "Cluster threshold",
+            "key": "query.threshold",
+            "minValues": 0,
+            "maxValues": 1,
+            "typeDescriptor": {
+              "type": "java.lang.Float",
               "@class": "org.squonk.options.SimpleTypeDescriptor"
             },
             "@class": "org.squonk.options.OptionDescriptor"
