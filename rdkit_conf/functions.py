@@ -2,9 +2,10 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem import AllChem, TorsionFingerprints
 from rdkit.ML.Cluster import Butina
-from mol_parsing.functions import find_lib_type, read_input, write_json_results
+from mol_parsing.functions import find_lib_type, read_input, write_json_results, write_results
 from mol_parsing.rdkit_parse import parse_mol_json, generate_mols_from_json
 from django.core.exceptions import ValidationError
+from threading import Thread
 import CloseableQueue
 import uuid, collections, json
 from django.http import HttpResponse, StreamingHttpResponse
@@ -44,19 +45,28 @@ def request_params(request):
     else:
         minimize = 0
     return screen_lib, mol_type, num, attempts, prune, method, threshold, minimize
-
-def process_request_conformers(screen_lib, mol_type, num, attempts, prune, method, threshold, minimize):
-	gener = generate_mols_from_json(screen_lib)
-	results = CloseableQueue.CloseableQueue()
+    
+def process_mols_conformers(mols, results, num, attempts, prune, method, threshold, minimize):
 	idx=0	
-	for mol in gener:
+	for mol in mols:
 		idx+=1
 		#print "submitting",idx
 		process_mol_conformers(mol, idx, results, num, attempts, prune, method, threshold, minimize)
 	print "mols handled:",idx
 	results.close()
-	return StreamingHttpResponse(write_json_results(CloseableQueue.dequeue(results)))
+	
+
+def process_request_conformers(screen_lib, mol_type, num, attempts, prune, method, threshold, minimize):
+	mols = generate_mols_from_json(screen_lib)
+	results = CloseableQueue.CloseableQueue()
+	
+	#return StreamingHttpResponse(write_json_results(CloseableQueue.dequeue(results)))
 	#return HttpResponse(json.dumps(results))
+	
+	thread = Thread(target=process_mols_conformers, args=(mols, results, num, attempts, prune, method, threshold, minimize))
+	thread.start()
+	
+	return write_results(CloseableQueue.dequeue(results))
 
 	
 def process_mol_conformers(mol, i, results, numConfs, maxAttempts, pruneRmsThresh, clusterMethod, clusterThreshold, minimizeIterations):

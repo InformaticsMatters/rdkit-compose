@@ -7,7 +7,7 @@ from rdkit import Chem
 import json, gzip
 from rdkit.ML.Cluster import Butina
 from rdkit.ML.Cluster import Butina
-from django.http import HttpResponse
+from django.http import HttpResponse, StreamingHttpResponse
 from django.http import HttpResponseServerError
 from json_function.json_parse import remove_keys
 import CloseableQueue
@@ -193,14 +193,17 @@ def write_json_results(items):
 	yield "[\n"
 	count = 0
 	for item in items:
-		#print "writing..."
+		#print "writing...",count+1
 		if count == 0:
 			yield json.dumps(item)
 		else: 	
 			yield ",\n" + json.dumps(item)
 		count +=1
 	yield "\n]"
-	print "Results complete"
+	print count,"results generated"
+	
+def write_results(items):
+	return StreamingHttpResponse(write_json_results(items))
 	
 #class IterEncoder(json.JSONEncoder):
 #	"""Allows iterator to be encoded as json.
