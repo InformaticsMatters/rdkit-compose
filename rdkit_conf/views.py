@@ -14,8 +14,8 @@ def index(request):
     "paths":["/Chemistry/Toolkits/RDKit/Conformer","/Chemistry/3D"],
     "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
     "layers":["public"],
-    "inputClass":"com.im.lac.types.MoleculeObject",
-    "outputClass":"com.im.lac.types.MoleculeObject",
+    "inputClass":"org.squonk.types.MoleculeObject",
+    "outputClass":"org.squonk.types.MoleculeObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
     "accessModes":[

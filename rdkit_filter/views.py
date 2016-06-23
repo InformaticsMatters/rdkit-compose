@@ -23,8 +23,8 @@ def index(request):
     "paths":["/Chemistry/Toolkits/RDKit/Filter","/Chemistry/Filter"],
     "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
     "layers":["public"],
-    "inputClass":"com.im.lac.types.MoleculeObject",
-    "outputClass":"com.im.lac.types.BasicObject",
+    "inputClass":"org.squonk.types.MoleculeObject",
+    "outputClass":"org.squonk.types.BasicObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
     "accessModes":

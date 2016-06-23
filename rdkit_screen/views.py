@@ -24,8 +24,8 @@ def index(request):
     "paths":["/Chemistry/Toolkits/RDKit/Screening","/Chemistry/Screening"],
     "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
     "layers":["public"],
-    "inputClass":"com.im.lac.types.MoleculeObject",
-    "outputClass":"com.im.lac.types.MoleculeObject",
+    "inputClass":"org.squonk.types.MoleculeObject",
+    "outputClass":"org.squonk.types.MoleculeObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
     "accessModes":[
@@ -35,7 +35,6 @@ def index(request):
         "description":"Execute as an asynchronous REST web service",
         "executionEndpoint":"screen_simple",
         "endpointRelative":True,
-        "jobType":"com.im.lac.job.jobdef.AsyncHttpProcessDatasetJobDefinition",
         "parameters":[
             {
             "editable": True,
