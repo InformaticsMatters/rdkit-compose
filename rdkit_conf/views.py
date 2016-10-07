@@ -10,22 +10,14 @@ def index(request):
     "name":"3D Conformers (RDKit)",
     "description":"RDKit conformer generation",
     "tags":["conformer","3d","rdkit"],
-    "icon": "icons/molecule_generator.png",
-    "paths":["/Chemistry/Toolkits/RDKit/Conformer","/Chemistry/3D"],
-    "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
-    "layers":["public"],
     "inputClass":"org.squonk.types.MoleculeObject",
     "outputClass":"org.squonk.types.MoleculeObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
-    "accessModes":[
-    	{
-        "id":"asyncHttp",
-        "name":"Immediate execution",
-        "description":"Execute as an asynchronous REST web service",
-        "executionEndpoint":"gen_confs",
-        "endpointRelative":True,
-        "parameters":[
+    "icon": "icons/molecule_generator.png",
+    "executionEndpoint":"gen_confs",
+    "endpointRelative":True,
+    "parameters":[
             {
             "editable": True,
             "visible": True,
@@ -116,8 +108,6 @@ def index(request):
             }
         ],
         "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceFatExecutorStep"
-    }
-    ]
     }
     ]
     return HttpResponse(json.dumps(out_d))

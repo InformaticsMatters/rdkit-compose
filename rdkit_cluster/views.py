@@ -23,22 +23,14 @@ def index(request):
     "name":"RDKit clustering",
     "description":"RDKit simple descriptor based clustering",
     "tags":["clustering","rdkit"],
-    "icon": "icons/clustering.png",
-    "paths":["/Chemistry/Toolkits/RDKit/Clustering","/Chemistry/Clustering"],
-    "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
-    "layers":["public"],
     "inputClass":"org.squonk.types.MoleculeObject",
     "outputClass":"org.squonk.types.MoleculeObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
-    "accessModes":[
-    {
-        "id":"asyncHttp",
-        "name":"Immediate execution",
-        "description":"Execute as an asynchronous REST web service",
-        "executionEndpoint":"cluster_simple",
-        "endpointRelative":True,
-        "parameters":[
+    "icon": "icons/clustering.png",
+    "executionEndpoint":"cluster_simple",
+    "endpointRelative":True,
+    "parameters":[
             {
             "editable": True,
             "visible": True,
@@ -121,8 +113,6 @@ def index(request):
             }
         ],
         "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
-    }
-    ]
     }
     ]
     return HttpResponse(json.dumps(out_d))

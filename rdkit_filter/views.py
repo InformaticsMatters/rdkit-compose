@@ -19,23 +19,14 @@ def index(request):
     "name":"PAINS filter (RDKit)",
     "description":"RDKit implementation of PAINS filter",
     "tags":["pains","filter","rdkit"],
-    "icon": "icons/filter_molecules.png",
-    "paths":["/Chemistry/Toolkits/RDKit/Filter","/Chemistry/Filter"],
-    "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
-    "layers":["public"],
     "inputClass":"org.squonk.types.MoleculeObject",
     "outputClass":"org.squonk.types.BasicObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
-    "accessModes":
-        [
-    	{
-        "id":"asyncHttp",
-        "name":"Immediate execution",
-        "description":"Execute as an asynchronous REST web service",
-        "executionEndpoint":"pains",
-        "endpointRelative":True,
-        "parameters":[
+    "icon":"icons/filter_molecules.png",
+    "executionEndpoint":"pains",
+    "endpointRelative":True,
+    "parameters":[
             {
             "editable": True,
             "visible": True,
@@ -64,9 +55,7 @@ def index(request):
             "@class": "org.squonk.options.OptionDescriptor"
             }
         ],
-        "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
-    	}
-    ]
+    "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
     }
     ]
     return HttpResponse(json.dumps(out_d))

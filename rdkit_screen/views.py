@@ -20,22 +20,14 @@ def index(request):
     "name":"RDKit screening",
     "description":"RDKit simple descriptor based screening",
     "tags":["virtualscreening", "screening", "moleculardescriptors", "fingerprints", "rdkit"],
-    "icon": "icons/filter_molecules.png",
-    "paths":["/Chemistry/Toolkits/RDKit/Screening","/Chemistry/Screening"],
-    "owner":"Tim Dudgeon <tdudgeon@informaticsmatters.com>",
-    "layers":["public"],
     "inputClass":"org.squonk.types.MoleculeObject",
     "outputClass":"org.squonk.types.MoleculeObject",
     "inputType":"STREAM",
     "outputType":"STREAM",
-    "accessModes":[
-    {
-        "id":"asyncHttp",
-        "name":"Immediate execution",
-        "description":"Execute as an asynchronous REST web service",
-        "executionEndpoint":"screen_simple",
-        "endpointRelative":True,
-        "parameters":[
+    "icon": "icons/filter_molecules.png",
+    "executionEndpoint":"screen_simple",
+    "endpointRelative":True,
+    "parameters":[
             {
             "editable": True,
             "visible": True,
@@ -145,8 +137,6 @@ def index(request):
             }
         ],
         "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
-    }
-    ]
     }]
     return HttpResponse(json.dumps(out_d))
 
