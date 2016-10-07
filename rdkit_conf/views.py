@@ -17,7 +17,7 @@ def index(request):
     "icon": "icons/molecule_generator.png",
     "executionEndpoint":"gen_confs",
     "endpointRelative":True,
-    "parameters":[
+    "options":[
             {
             "editable": True,
             "visible": True,
@@ -107,7 +107,7 @@ def index(request):
             "@class": "org.squonk.options.OptionDescriptor"
             }
         ],
-        "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceFatExecutorStep"
+        "executorClassName":"org.squonk.execution.steps.impl.MoleculeServiceFatExecutorStep"
     }
     ]
     return HttpResponse(json.dumps(out_d))

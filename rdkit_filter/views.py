@@ -26,7 +26,7 @@ def index(request):
     "icon":"icons/filter_molecules.png",
     "executionEndpoint":"pains",
     "endpointRelative":True,
-    "parameters":[
+    "options":[
             {
             "editable": True,
             "visible": True,
@@ -55,7 +55,7 @@ def index(request):
             "@class": "org.squonk.options.OptionDescriptor"
             }
         ],
-    "adapterClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
+    "executorClassName":"org.squonk.execution.steps.impl.MoleculeServiceThinExecutorStep"
     }
     ]
     return HttpResponse(json.dumps(out_d))
