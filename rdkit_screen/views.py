@@ -33,7 +33,7 @@ def index(request):
             "visible": True,
             "description": "Structure to use for the query",
             "label": "Query Structure",
-            "key": "query.smiles",
+            "key": "query.structure",
             "typeDescriptor": {
               "type": "org.squonk.options.types.Structure",
               "formats": ["smiles"],        
@@ -144,19 +144,21 @@ def index(request):
 @gzip_page
 @csrf_exempt
 def screen_simple(request):
-    """View to take a smiles and then screen against a known library of actives"""
+    """View to take a smiles and then screen against a known library"""
     import urllib
     # Take the smiles in the request object
     # Now get the library
     if "dump_out" in request.GET:
         return HttpResponse(json.dumps(str(request))+"\nBODY:" + request.body)
     mol_type, screen_lib, fp_method, sim_method, threshold, params = request_handler(request)
-    if "smiles" in request.GET:
-        smiles = request.GET["smiles"]
+    if "structure_source" in request.GET:
+        smiles = request.GET["structure_source"]
         scr_mols = CloseableQueue.CloseableQueue()
         [scr_mols.put({"RDMOL": Chem.MolFromSmiles(str(x))}) for x in str(smiles).split(".")]
         scr_mols.close()
     else:
-        return HttpResponse("You must state a SMILES")
+    	# TODO - work out how to throw this as 400 error - doing the obvious doesn't seem to work
+    	print "No smiles specified as parameter structure_source"
+        return HttpResponse("You must specify a structure as SMILES with the parameter structure_source")
     # Now handle this file upload 
     return process_input(fp_method, sim_method, screen_lib, mol_type, threshold, params=None, scr_mols=scr_mols)

@@ -69,7 +69,7 @@ class FPMethods():
             m["FP"] = my_fp
             out_mols.put(m)
             mols.task_done()
-        print "HERE"
+        #print "HERE"
         if error_counter:
             print "ERROR CREATING", str(error_counter), "FINGERPRINTS"
         out_mols.close()
